@@ -29,7 +29,7 @@ class PolynomialInitializationMixin:
     def _compute_initial_values_for_model_parameters(
         self,
         dataset: Dataset,
-    ):
+    ) -> VariableNameToValueMapping:
         from leaspy.models.utilities import (
             compute_linear_regression_subjects,
             get_log_velocities,
