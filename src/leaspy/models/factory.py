@@ -9,6 +9,8 @@ from .lme import LMEModel
 from .logistic import LogisticModel
 from .mixture import LogisticMultivariateMixtureModel
 from .shared_speed_logistic import SharedSpeedLogisticModel
+from .polynomial import PolynomialModel
+
 
 __all__ = [
     "ModelName",
@@ -26,6 +28,7 @@ class ModelName(str, Enum):
     LME = "lme"
     CONSTANT = "constant"
     MIXTURE_LOGISTIC = "mixture_logistic"
+    POLYNOMIAL = "polynomial"
 
 
 def model_factory(
@@ -73,6 +76,8 @@ def model_factory(
         return LogisticModel(instance_name, **kwargs)
     if name == ModelName.LINEAR:
         return LinearModel(instance_name, **kwargs)
+    if name == ModelName.POLYNOMIAL:
+        return PolynomialModel(instance_name, **kwargs)
     if name == ModelName.SHARED_SPEED_LOGISTIC:
         return SharedSpeedLogisticModel(instance_name, **kwargs)
     if name == ModelName.LME:
