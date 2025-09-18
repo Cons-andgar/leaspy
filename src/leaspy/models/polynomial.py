@@ -88,7 +88,6 @@ class PolynomialModel(PolynomialInitializationMixin, RiemanianManifoldModel):
             g_std=Hyperparameter(0.01),
             g=PopulationLatentVariable(Normal("g_mean", "g_std")),
 
-            # Quadratic term
             v1_mean=ModelParameter.for_pop_mean("v1", shape=(self.dimension,)),
             v1_std=Hyperparameter(0.01),
             v1=PopulationLatentVariable(Normal("v1_mean", "v1_std")),
@@ -112,6 +111,5 @@ class PolynomialModel(PolynomialInitializationMixin, RiemanianManifoldModel):
     ):
         pop_s = (None, None, ...)
         rt = unsqueeze_right(rt, ndim=1)
-        return (
-            g[pop_s] + v0[pop_s] * rt + v1[pop_s] * (rt ** 2) + space_shifts[:, None, ...].weighted_value
-        )
+        # Entire sum is wrapped in WeightedTensor
+        return (g[pop_s] + v0[pop_s] * rt + v1[pop_s] * (rt ** 2) + space_shifts[:, None, ...]).weighted_value
