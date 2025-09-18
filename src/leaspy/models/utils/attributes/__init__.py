@@ -2,12 +2,15 @@ from .abstract_attributes import AbstractAttributes
 from .linear_attributes import LinearAttributes
 from .logistic_attributes import LogisticAttributes
 from .logistic_parallel_attributes import LogisticParallelAttributes
+from .polynomial_attributes import PolynomialAttributes
+
 
 __all__ = [
     "AttributesFactory",
     "LinearAttributes",
     "LogisticAttributes",
     "LogisticParallelAttributes",
+    "PolynomialAttributes",
 ]
 
 
@@ -22,6 +25,7 @@ class AttributesFactory:
         "logistic_parallel": LogisticParallelAttributes,
         "linear": LinearAttributes,
         "univariate_linear": LinearAttributes,
+        "polynomial": PolynomialAttributes
         #'mixed_linear-logistic': ... # TODO
     }
 

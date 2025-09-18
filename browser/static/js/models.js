@@ -5,6 +5,8 @@ let compute_values = (ages, model_parameters, individual_parameters) => {
     return compute_logistic(ages, model_parameters['parameters'], individual_parameters, model_parameters)
   } else if(model_parameters['name'] == 'linear' || model_parameters['name'] == 'univariate_linear') {
     return compute_linear(ages, model_parameters['parameters'], individual_parameters)
+  } else if(model_parameters['name'] == 'polynomial') {
+    return compute_polynomial(ages, model_parameters['parameters'], individual_parameters)
   } else {
     alert("Unknown model: " + model_parameters['name'])
   }
@@ -39,6 +41,39 @@ let compute_linear = (ages, parameters, individual_parameters) => {
     outputs.push(output);
   }
   return outputs;
+}
+
+let compute_polynomial = (ages, parameters, individual_parameters) => {
+  // Model parameters
+  var t0 = parameters['tau_mean']
+  var g = parameters['g']               // intercept
+  var v0 = parameters['v0'] || new Array(g.length).fill(1)   // linear slope
+  var v1 = parameters['v1'] || new Array(g.length).fill(0)   // quadratic slope
+  var mixing_matrix = parameters['mixing_matrix']
+
+  // Individual parameters
+  var alpha = Math.exp(individual_parameters['xi'])
+  var tau = individual_parameters['tau']
+  var sources = individual_parameters['sources']
+  var space_shift = new Array(g.length).fill(0)
+  if (mixing_matrix && mixing_matrix.length) {
+    space_shift = math.multiply(mixing_matrix, sources)
+  }
+
+  // Compute values
+  var outputs = []
+  for(var i=0; i < g.length; ++i) {
+    var output = []
+    var v_i = v0[i]
+    var q_i = v1[i]   // quadratic term
+    for(var j=0; j < ages.length; ++j) {
+      var r_age = alpha * (ages[j] - t0 - tau)
+      var val = g[i] + space_shift[i] + v_i * r_age + q_i * Math.pow(r_age, 2)
+      output.push(val)
+    }
+    outputs.push(output)
+  }
+  return outputs
 }
 
 let get_deltas_i = (model, parameters, i) => {
