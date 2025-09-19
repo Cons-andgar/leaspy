@@ -64,7 +64,9 @@ class PolynomialInitializationMixin:
             "tau_mean": torch.tensor(t0),
             "tau_std": self.tau_std,
             "xi_std": self.xi_std,
+            "noise_std": torch.ones_like(v0) * 0.01  # <-- add this
         }
+
 
         if self.source_dimension >= 1:
             parameters["betas_mean"] = torch.zeros(
