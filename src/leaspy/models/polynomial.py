@@ -42,7 +42,8 @@ class PolynomialInitializationMixin:
 
         # Use linear regression to estimate intercept & slope per feature
         d_regress_params = compute_linear_regression_subjects(df, max_inds=None)
-        df_all = torch.tensor(df.index)  # just placeholder
+        df_all = torch.arange(len(df.index), dtype=torch.float32)
+
         df_all_regress_params = pd.concat(d_regress_params, names=["feature"])
 
         # Linear term
