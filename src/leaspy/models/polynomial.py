@@ -56,13 +56,11 @@ class PolynomialInitializationMixin:
 
         # Quadratic term v1: initialize small (or 0) for all features
         v1_mean = torch.full_like(v0, -0.01)
-        v1_std  = torch.full_like(v0, 1e-3)
 
         parameters = {
             "g_mean": positions,
             "log_v0_mean": get_log_velocities(v0, self.features),
             "v1_mean": v1_mean,
-            "v1_std": v1_std,
             "tau_mean": torch.tensor(t0),
             "tau_std": self.tau_std,
             "xi_std": self.xi_std,
