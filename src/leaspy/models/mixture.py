@@ -743,6 +743,7 @@ class RiemanianManifoldMixtureModel(TimeReparametrizedMixtureModel):
         space_shifts: torch.Tensor,
         metric,
         v0,
+        v1=None,
         g,
     ) -> torch.Tensor:
         pass
