@@ -850,3 +850,22 @@ def _apply_operation(
         )
 
     return WeightedTensor(result_value)
+
+def unsqueeze(self, dim: int) -> "WeightedTensor":
+    """
+    Return a new WeightedTensor with an added dimension at the specified position.
+
+    Parameters
+    ----------
+    dim : int
+        The dimension to unsqueeze.
+
+    Returns
+    -------
+    WeightedTensor
+        A new WeightedTensor with unsqueezed value and weight.
+    """
+    if self.weight is not None:
+        return WeightedTensor(self.value.unsqueeze(dim), self.weight.unsqueeze(dim))
+    else:
+        return WeightedTensor(self.value.unsqueeze(dim), None)
