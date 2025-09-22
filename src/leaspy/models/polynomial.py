@@ -114,5 +114,21 @@ class PolynomialModel(PolynomialInitializationMixin, RiemanianManifoldModel):
     ):
         pop_s = (None, None, ...)
         rt = unsqueeze_right(rt, ndim=1)
+
         # Entire sum is wrapped in WeightedTensor
         return (g[pop_s] + v0[pop_s] * rt + v1[pop_s] * (rt ** 2) + space_shifts[:, None, ...]).weighted_value
+    
+    @classmethod
+    def model_no_sources(
+        cls,
+        *,
+        rt: torch.Tensor,
+        metric,
+        v0,
+        v1,
+        g,
+    ):
+        pop_s = (None, None, ...)
+        rt = rt.unsqueeze(-1)
+
+        return g[pop_s] + v0[pop_s] * rt + v1[pop_s] * (rt ** 2)
