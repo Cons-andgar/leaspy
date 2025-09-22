@@ -129,6 +129,6 @@ class PolynomialModel(PolynomialInitializationMixin, RiemanianManifoldModel):
         g,
     ):
         pop_s = (None, None, ...)
-        rt = rt.unsqueeze(-1)
+        rt = unsqueeze_right(rt, ndim=1)
 
         return g[pop_s] + v0[pop_s] * rt + v1[pop_s] * (rt ** 2)
